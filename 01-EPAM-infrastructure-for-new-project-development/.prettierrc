@@ -1,0 +1,5 @@
+{
+  "prettier.tabWidth": 2,
+  "editor.formatOnSave": false,
+  "eslint.autoFixOnSave": false
+}

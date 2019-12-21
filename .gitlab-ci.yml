@@ -1,0 +1,67 @@
+image: node:latest
+
+default:
+  before_script:
+    - cd 01-EPAM-infrastructure-for-new-project-development
+
+stages:
+  - install
+  - test
+  - lint
+  - plato
+  - build
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+
+install:
+  stage: install
+  script:
+    - yarn install
+    - yarn --version
+  artifacts:
+    paths:
+      - 01-EPAM-infrastructure-for-new-project-development/node_modules/
+
+test:
+  stage: test
+  script:
+    - yarn test
+    
+lint:
+  stage: lint
+  script:
+    - yarn lint
+
+plato:
+  stage: plato
+  script:
+    - yarn global add plato
+    - yarn plato
+  artifacts:
+    paths:
+      - 01-EPAM-infrastructure-for-new-project-development/report/
+
+build:
+  stage: build
+  script:
+    - yarn build
+  artifacts:
+    paths:
+      - 01-EPAM-infrastructure-for-new-project-development/dist/
+    expire_in: 1 hour
+
+deploy:
+  image: python:latest
+  stage: deploy
+  only:
+    - lesson01-EPAM-infrastructure
+    - master
+  script:
+    - pip install awscli
+    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+    - aws s3 rm s3://www.hs-mpjs-lesson1.com --recursive
+    - aws s3 sync ./dist s3://www.hs-mpjs-lesson1.com --acl public-read
