@@ -1,0 +1,9 @@
+$my-blue-color: blue;
+
+h1 {
+  font-weight: bold;
+
+  & .name {
+    color: $my-blue-color;
+  }
+}
