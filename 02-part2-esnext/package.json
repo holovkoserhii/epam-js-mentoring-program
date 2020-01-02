@@ -1,0 +1,16 @@
+{
+  "name": "02-part2-esnext",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "checktask1": "node part1.js",
+    "checktask2": "node part2.js",
+    "checktask3": "node part3.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.0"
+  }
+}
