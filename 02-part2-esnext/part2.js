@@ -13,8 +13,8 @@ class Book {
   }
 
   [Symbol.iterator]() {
-    var index = 0;
-    var data = this.description;
+    let index = 0;
+    let data = this.description;
 
     return {
       next: () => ({ value: data[index++], done: !data[index] })

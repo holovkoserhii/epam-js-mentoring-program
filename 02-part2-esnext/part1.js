@@ -13,19 +13,38 @@ const possibleSearch = [
   "species"
 ];
 
+const getUrl = (subject, id, apiUrl) => {
+  if (
+    !possibleSearch.includes(subject.toLowerCase()) ||
+    (id && typeof id !== "number")
+  ) {
+    throw new Error("incorrect searching parameter");
+  }
+  const idQuery = id ? id : "";
+  return `${apiUrl}/${subject}/${idQuery}`;
+};
+
+const convertToString = arr => arr.join(", ");
+
+const getStory = ({
+  planetNamesExample,
+  favouritePlanetName,
+  favouritePlanetPopulation,
+  residentNames
+}) =>
+  `There are a lot of planets in a Star wars film.
+${convertToString(planetNamesExample)} are among them.
+My favourite planet is ${favouritePlanetName}.
+${favouritePlanetPopulation} people permanently reside there, among which: ${convertToString(
+    residentNames
+  )}.`;
+
 class furiousAndPromicing {
   constructor() {
     this.baseUrl = "https://swapi.co/api";
   }
   get(subject, id) {
-    if (
-      !possibleSearch.includes(subject.toLowerCase()) ||
-      (id && typeof id !== "number")
-    ) {
-      throw new Error("incorrect searching parameter");
-    }
-    const idQuery = id ? id : "";
-    return axios.get(`${this.baseUrl}/${subject}/${idQuery}`);
+    return axios.get(getUrl(subject, id, this.baseUrl));
   }
 
   post(something) {
@@ -58,9 +77,6 @@ const getResidentName = url =>
   axios.get(url).then(response => response.data.name);
 
 const tellMeAboutStarWars = async () => {
-  let favouritePlanetName;
-  let favouritePlanetPopulation;
-  let residentNames = [];
   const planets = await getSWplanets();
   const planetNamesExample = planets
     .slice(0, 5)
@@ -68,22 +84,22 @@ const tellMeAboutStarWars = async () => {
 
   const FAVOURITE_PLANET_ID = 8;
 
-  await getPlanetData(FAVOURITE_PLANET_ID).then(async data => {
-    favouritePlanetName = data.name;
-    favouritePlanetPopulation = data.population;
-    const residentsURL = data.residents;
-    residentNames = await Promise.all(
-      residentsURL.map(async url => await getResidentName(url))
-    ); // looks like I made it too complex :) Is it possible to simplify this?
-  });
+  const {
+    name: favouritePlanetName,
+    population: favouritePlanetPopulation,
+    residents
+  } = await getPlanetData(FAVOURITE_PLANET_ID);
+  residentNames = await Promise.all(
+    residents.map(async url => await getResidentName(url))
+  );
 
   console.log(
-    `There are a lot of planets in a Star wars film.
-${planetNamesExample.join(", ")} are among them.
-My favourite planet is ${favouritePlanetName}.
-${favouritePlanetPopulation} people permanently reside there, among which: ${residentNames.join(
-      ", "
-    )}.`
+    getStory({
+      planetNamesExample,
+      favouritePlanetName,
+      favouritePlanetPopulation,
+      residentNames
+    })
   );
 };
 
