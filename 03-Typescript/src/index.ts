@@ -6,8 +6,8 @@ interface TodoItem {
   userId: number;
 }
 
-const showInConsole = (object: TodoItem) => {
-  console.log('answer for the task 3');
+const showInConsole = (object: TodoItem): void => {
+  console.log('answer for the task 3 (I\'m too late, because I am async)');
   console.log(object)
 }
 
@@ -40,46 +40,21 @@ console.log('answer for the task 4');
 console.log(myJS);
 
 // task 5
-interface Dictionary<T> {
-  [key: string]: T;
+interface Customer {
+  age: number;
+  name: string;
 }
 
-class MyOwnClass<K, T> {
-  constructor(
-    public prop1: K,
-    public prop2: T
-  ) { }
+const customerNamesLogger = <T extends Customer>(arg1: T, arg2: T): [string, string] => [arg1.name, arg2.name]
 
-  useProp1: () => {
-    prop: this.prop1,
-    type: K
-  }
-
-  useProp2: () => {
-    prop: this.prop2,
-    type: T
-  }
+const customerA: Customer = {
+  name: 'Capitan Morgan',
+  age: 55,
+}
+const customerB = {
+  name: 'Jack Daniels',
+  age: 40,
 }
 
-class myFirstAbstractAttempt extends MyOwnClass {
-  name: string
-  age: number
-
-  constructor(name: string, age: number) {
-    super(name, age)
-  }
-
-  useProp1() {
-    return {
-      prop: this.name,
-      type: typeof (this.name)
-    }
-  }
-
-  useProp2() {
-    return {
-      prop: this.age,
-      type: typeof (this.age)
-    }
-  }
-}
+console.log('answer for the task 5');
+console.log(customerNamesLogger(customerA, customerB));
