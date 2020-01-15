@@ -6,14 +6,14 @@ interface TodoItem {
   userId: number;
 }
 
-const showInConsole = (object: TodoItem): void => {
+const showPostInConsole = async (): Promise<any> => {
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts/1')
   console.log('answer for the task 3 (I\'m too late, because I am async)');
-  console.log(object)
+  const result: TodoItem = await response.json()
+  console.log(result)
 }
 
-fetch('https://jsonplaceholder.typicode.com/posts/1')
-  .then(response => response.json())
-  .then(json => showInConsole(json))
+showPostInConsole()
 
 // task 4
 
