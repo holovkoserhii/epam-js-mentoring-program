@@ -63,6 +63,8 @@
         "no-undef": "off",
         "no-unused-vars": "off",
         "no-console": "off",
+        "explicit-function-return-type": "off",
+        "prefer-const": "off",
         "comma-dangle": [
           "error",
           "always-multiline"
