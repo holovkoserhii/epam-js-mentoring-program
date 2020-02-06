@@ -1,0 +1,22 @@
+{
+  "notes": [
+    {
+      "title": "Purchases",
+      "text": "buy milk, coffee, bread",
+      "isCompleted": false,
+      "id": 1
+    },
+    {
+      "title": "do something else",
+      "text": "Or not...",
+      "isCompleted": false,
+      "id": 2
+    },
+    {
+      "title": "This is just a random text",
+      "text": "aslfghierlfhverailufvhgrailufgveriluf",
+      "isCompleted": false,
+      "id": 3
+    }
+  ]
+}

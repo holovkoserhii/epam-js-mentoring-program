@@ -1,8 +1,8 @@
 <template>
   <header class="header">
-    <h1>TodoList</h1>
+    <h1>NoteList</h1>
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">Home</router-link>
       <router-link to="/about">About</router-link>
     </div>
   </header>
@@ -28,7 +28,7 @@ export default {
 }
 
 #nav {
-  padding: 30px;
+  padding: 10px;
 }
 
 #nav a {
