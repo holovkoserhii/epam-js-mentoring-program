@@ -3,6 +3,7 @@
     <h1>NoteList</h1>
     <div id="nav">
       <router-link to="/">Home</router-link>
+      <router-link to="/archive">Archive</router-link>
       <router-link to="/about">About</router-link>
     </div>
   </header>

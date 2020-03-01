@@ -4,13 +4,22 @@
       <p class="title">Title: {{note.title}}</p>
       <p class="text">Text: {{note.text}}</p>
     </div>
-    <p class="action-wrapper">
-      <button @click="markComplete" class="action complete">✔</button>
+    <p v-if="isArchive" class="action-wrapper">
+      <button
+        title="mark NOT archive"
+        @click="$emit('unArchive-note', note.id)"
+        class="action archive"
+      >🗐</button>
+    </p>
+    <p v-else class="action-wrapper">
+      <button title="mark complete" @click="markComplete" class="action complete">✔</button>
       <router-link
+        title="edit"
         class="action change"
         :to="{name: 'edit', params: {id: this.note.id, text: this.note.text, title: this.note.title}}"
       >✎</router-link>
-      <button @click="$emit('delete-note', note.id)" class="action delete">✖</button>
+      <button title="archive" @click="$emit('archive-note', note.id)" class="action archive">🗐</button>
+      <button title="delete" @click="$emit('delete-note', note.id)" class="action delete">✖</button>
     </p>
   </div>
 </template>
@@ -27,6 +36,14 @@ export default {
       };
       this.$emit("change-note", updatedNoteDetails);
     }
+  },
+  data() {
+    return {
+      isArchive: false
+    };
+  },
+  created() {
+    this.isArchive = Boolean(this.$attrs.isArchive);
   }
 };
 </script>
@@ -57,6 +74,9 @@ export default {
   cursor: pointer;
   width: 35px;
   height: 35px;
+}
+.archive {
+  background: #97a829;
 }
 .delete {
   background: #ff0000;

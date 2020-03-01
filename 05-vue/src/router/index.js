@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import EditNote from "../views/EditNote.vue";
+import ArchivedNotes from "../views/ArchivedNotes.vue";
 import PageNotFound from "../views/PageNotFound.vue";
 
 Vue.use(VueRouter);
@@ -16,6 +17,11 @@ const routes = [
     path: "/edit/:id",
     name: "edit",
     component: EditNote
+  },
+  {
+    path: "/archive",
+    name: "archive",
+    component: ArchivedNotes
   },
   {
     path: "/about",

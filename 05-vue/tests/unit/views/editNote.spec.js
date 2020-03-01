@@ -1,12 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
 import EditNote from "../../../src/views/EditNote";
-import flushPromises from "flush-promises";
-
-// jest.mock("../../../src/utils/api", () => ({
-//   updateItem() {
-//     return Promise.resolve();
-//   }
-// }));
 
 describe("EditNote", () => {
   let wrapper;

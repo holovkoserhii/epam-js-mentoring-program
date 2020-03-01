@@ -1,17 +1,15 @@
 <template>
   <div id="app">
     <AddNote v-on:add-note="addNote" />
-    <div class="filter" v-if="notes.length">
+    <div class="filter" v-if="allNotes.length">
       <input type="text" v-model="filter" placeholder="Try searching notes..." />
     </div>
-    <Notes v-bind:notes="notes" v-on:delete-note="deleteNote" v-on:change-note="changeNote" />
-    <div class="archiving">
-      <p>Try archiving notes to local storage and restore them back!</p>
-      <div class="action-wrapper">
-        <button @click="archiveNotes" class="save">Save notes to local storage</button>
-        <button @click="restoreNotes" class="restore">Get notes from local storage</button>
-      </div>
-    </div>
+    <Notes
+      v-bind:notes="notes"
+      v-on:delete-note="deleteNote"
+      v-on:archive-note="archiveNote"
+      v-on:change-note="changeNote"
+    />
     <p>
       Disclaimer: before using please make sure you run json-server (yarn run
       json-server)
@@ -21,10 +19,6 @@
 
 <script>
 import { getItems, addItem, updateItem, deleteItem } from "../utils/api";
-import {
-  saveItemsToLocalStorage,
-  getItemsFromLocalStorage
-} from "../utils/storage";
 import Notes from "../components/Notes";
 import AddNote from "../components/AddNote";
 
@@ -37,7 +31,8 @@ export default {
   data() {
     return {
       notes: [],
-      filter: ""
+      filter: "",
+      allNotes: []
     };
   },
   watch: {
@@ -66,22 +61,9 @@ export default {
       this.notes = data;
       this.allNotes = data;
     },
-    async archiveNotes() {
-      const { data } = await getItems();
-      saveItemsToLocalStorage(JSON.stringify(data));
-    },
-    async restoreNotes() {
-      const restoredNotes = getItemsFromLocalStorage();
-      await this.deleteAllNotes();
-      await restoredNotes.forEach(async ({ id, ...other }) => {
-        // eslint-disable-next-line no-console
-        console.log(id);
-        await addItem(other);
-      });
-      // quite a strange way to update :) but doing it once does not rerender view, and calling updated() lifecycle method runs into infinite loop
-      // Maybe good idea was to add some checks...
-      await this.getNotes();
-      await this.getNotes();
+    async archiveNote(id) {
+      await updateItem(id, { isArchived: true });
+      this.getNotes();
     },
     async deleteAllNotes() {
       const { data } = await getItems();
@@ -92,9 +74,6 @@ export default {
   created() {
     this.getNotes();
   }
-  // updated() {
-  //   this.getNotes();
-  // }
 };
 </script>
 

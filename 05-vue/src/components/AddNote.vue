@@ -22,7 +22,8 @@ export default {
       const newNote = {
         title: this.title,
         text: this.text,
-        isCompleted: false
+        isCompleted: false,
+        isArchived: false
       };
       this.$emit("add-note", newNote);
       this.title = "";
