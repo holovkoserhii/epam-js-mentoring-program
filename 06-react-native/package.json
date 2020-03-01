@@ -1,0 +1,22 @@
+{
+  "name": "epam_q42019-q12020_spotify_api",
+  "version": "0.0.0",
+  "description": "No description",
+  "author": null,
+  "private": true,
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start"
+  },
+  "devDependencies": {
+    "babel-preset-expo": "^7.0.0"
+  },
+  "dependencies": {
+    "expo": "^36.0.0",
+    "react": "16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
+    "react-native-paper": "3.1.1",
+    "react-native-custom-qr-codes-expo": "2.2.0",
+    "react-native-svg": "~9.5.1"
+  }
+}
