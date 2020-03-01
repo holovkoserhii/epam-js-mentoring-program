@@ -1,0 +1,46 @@
+{
+  "notes": [
+    {
+      "title": "Purchases",
+      "text": "buy milk, coffee, bread etc",
+      "isCompleted": true,
+      "id": 1,
+      "isArchived": false
+    },
+    {
+      "title": "do something else",
+      "text": "Or not...",
+      "isCompleted": false,
+      "id": 2,
+      "isArchived": false
+    },
+    {
+      "title": "This is just a random text",
+      "text": "aslfghierlfhverailufvhgrailufgveriluf",
+      "isCompleted": false,
+      "id": 3,
+      "isArchived": false
+    },
+    {
+      "title": "123",
+      "text": "123",
+      "isCompleted": false,
+      "isArchived": true,
+      "id": 4
+    },
+    {
+      "title": "234",
+      "text": "234",
+      "isCompleted": true,
+      "isArchived": true,
+      "id": 5
+    },
+    {
+      "title": "a",
+      "text": "b",
+      "isCompleted": false,
+      "isArchived": false,
+      "id": 6
+    }
+  ]
+}
