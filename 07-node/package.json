@@ -1,0 +1,25 @@
+{
+  "name": "07-node",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "nodemon index.js",
+    "build-ui-and-start": "cd node-view && yarn build && cd .. && yarn start"
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "colors": "^1.4.0",
+    "config": "^3.3.0",
+    "nodemon": "^2.0.2",
+    "swagger": "^0.7.5"
+  },
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.3",
+    "request-promise": "^4.2.5",
+    "socket.io": "^2.3.0"
+  }
+}
