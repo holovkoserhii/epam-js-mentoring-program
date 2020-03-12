@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const { LOGIN_FAILED_ERROR_MESSAGE } = require("../utils/variables");
-const { authMiddleware } = require("../utils/utils");
+const { authMiddleware, logRequestInConsole } = require("../utils/utils");
 const User = require("../models/usersModel");
 
-router.post("/register", async (req, res) => {
+router.post("/register", logRequestInConsole, async (req, res) => {
   try {
     const user = new User({ ...req.body, createdAt: Date.now() });
     await user.save();
@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", logRequestInConsole, async (req, res) => {
   try {
     const { login, password } = req.body;
     const user = await User.findByCredentials({ login, password });
@@ -30,15 +30,19 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/", authMiddleware, async (req, res) =>
+router.get("/", authMiddleware, logRequestInConsole, async (req, res) =>
   res.status(200).json(req.user)
 );
 
-router.get("/totalNotes", authMiddleware, async (req, res) =>
-  res.status(200).json({ totalNotes: req.user.noteIds.length })
+router.get(
+  "/totalNotes",
+  authMiddleware,
+  logRequestInConsole,
+  async (req, res) =>
+    res.status(200).json({ totalNotes: req.user.noteIds.length })
 );
 
-router.delete("/", authMiddleware, async (req, res) => {
+router.delete("/", logRequestInConsole, authMiddleware, async (req, res) => {
   try {
     const { login, password } = req.body;
     const user = await User.findByCredentials({ login, password });
@@ -52,7 +56,7 @@ router.delete("/", authMiddleware, async (req, res) => {
   }
 });
 
-router.patch("/", authMiddleware, async (req, res) => {
+router.patch("/", authMiddleware, logRequestInConsole, async (req, res) => {
   try {
     const newData = req.body;
     await User.findByIdAndUpdate(req.user._id, { ...newData });

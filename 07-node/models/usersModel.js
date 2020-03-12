@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const {
-  secretJWT,
-  TOKEN_VALID_MINS,
+  // secretJWT,
+  // TOKEN_VALID_MINS,
   INCORRECT_USER_CREDENTIALS_ERROR_MESSAGE
 } = require("../utils/variables");
 
@@ -52,8 +54,8 @@ userSchema.pre("save", async function(next) {
 });
 
 userSchema.methods.generateAuthToken = async function() {
-  const token = jwt.sign({ _id: this._id }, secretJWT, {
-    expiresIn: `${TOKEN_VALID_MINS}m`
+  const token = jwt.sign({ _id: this._id }, process.env.secretJWT, {
+    expiresIn: `${process.env.TOKEN_VALID_MINS}m`
   });
   this.tokens = [...this.tokens, { token }];
   await this.save();

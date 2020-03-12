@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { authMiddleware } = require("../utils/utils");
+const { authMiddleware, logRequestInConsole } = require("../utils/utils");
 const Note = require("../models/notesModel");
 const User = require("../models/usersModel");
 
-router.post("/", authMiddleware, async (req, res) => {
+router.post("/", authMiddleware, logRequestInConsole, async (req, res) => {
   try {
     const note = new Note({
       ...req.body,
@@ -22,14 +22,14 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-router.get("/", authMiddleware, async (req, res) => {
+router.get("/", authMiddleware, logRequestInConsole, async (req, res) => {
   const { noteIds } = req.user;
   const ids = noteIds.map(noteItem => noteItem.noteId);
   const notes = await Promise.all(ids.map(async id => await Note.findById(id)));
   res.status(200).json({ notes });
 });
 
-router.delete("/:id", authMiddleware, async (req, res) => {
+router.delete("/:id", authMiddleware, logRequestInConsole, async (req, res) => {
   try {
     const note = await Note.findByIdAndDelete(req.params.id);
     const user = await User.findById(note.userId);
@@ -43,7 +43,7 @@ router.delete("/:id", authMiddleware, async (req, res) => {
   }
 });
 
-router.patch("/:id", authMiddleware, async (req, res) => {
+router.patch("/:id", authMiddleware, logRequestInConsole, async (req, res) => {
   try {
     await Note.findByIdAndUpdate(req.params.id, req.body);
     res.status(200).json({ updated: true });
