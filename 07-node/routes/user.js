@@ -34,6 +34,19 @@ router.get("/", authMiddleware, logRequestInConsole, async (req, res) =>
   res.status(200).json(req.user)
 );
 
+router.get("/getAllUsers", logRequestInConsole, async (req, res) => {
+  try {
+    const users = await User.find({});
+    const formattedUsers = users.map(user => ({
+      name: user.login,
+      totalNotes: user.noteIds.length
+    }));
+    res.status(200).json({ userList: formattedUsers });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 router.get(
   "/totalNotes",
   authMiddleware,

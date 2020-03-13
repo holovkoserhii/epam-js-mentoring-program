@@ -23,10 +23,16 @@ router.post("/", authMiddleware, logRequestInConsole, async (req, res) => {
 });
 
 router.get("/", authMiddleware, logRequestInConsole, async (req, res) => {
-  const { noteIds } = req.user;
-  const ids = noteIds.map(noteItem => noteItem.noteId);
-  const notes = await Promise.all(ids.map(async id => await Note.findById(id)));
-  res.status(200).json({ notes });
+  try {
+    const { noteIds } = req.user;
+    const ids = noteIds.map(noteItem => noteItem.noteId);
+    const notes = await Promise.all(
+      ids.map(async id => await Note.findById(id))
+    );
+    res.status(200).json({ notes });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
 router.delete("/:id", authMiddleware, logRequestInConsole, async (req, res) => {
