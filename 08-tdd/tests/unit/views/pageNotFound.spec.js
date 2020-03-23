@@ -12,7 +12,7 @@ describe("PageNotFound", () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it("should be a vue instanse", () => {
+  it("should be a vue instance", () => {
     expect(wrapper.exists()).toBe(true);
   });
 
