@@ -17,12 +17,8 @@
         />
       </div>
       <div class="actions">
-        <button @click="goBack" class="back">
-          I don't want to change anything, just let me back!!!111
-        </button>
-        <button type="submit" :disabled="this.title == ''">
-          I'm done
-        </button>
+        <button @click="goBack" class="back">I don't want to change anything, just let me back!!!111</button>
+        <button type="submit" :disabled="this.title == ''">I'm done</button>
       </div>
     </form>
   </div>

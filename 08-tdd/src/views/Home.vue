@@ -2,7 +2,11 @@
   <div id="app">
     <AddNote v-on:add-note="addNote" />
     <div class="filter" v-if="allNotes.length">
-      <input type="text" v-model="filter" placeholder="Try searching notes..." />
+      <input
+        type="text"
+        v-model="filter"
+        placeholder="Try searching notes..."
+      />
     </div>
     <Notes
       v-bind:notes="notes"
