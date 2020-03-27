@@ -15,28 +15,37 @@
     }
  
     function includeGadget(url) {
-      var scriptEl = document.createElement('script');
- 
+      var scriptEl = document.createElement("script");
+
       // This will totally prevent us from loading evil URLs!
-      if (url.match(/^https?:\/\//)) {
-        setInnerText(document.getElementById("log"),
-          "Sorry, cannot load a URL containing \"http\".");
+      if (url.match(/^https?:\/\//gi)) {
+        setInnerText(
+          document.getElementById("log"),
+          'Sorry, cannot load a URL containing "http".'
+        );
         return;
       }
- 
+
       // Load this awesome gadget
-      scriptEl.src = url;
- 
-      // Show log messages
-      scriptEl.onload = function() { 
-        setInnerText(document.getElementById("log"),  
-          "Loaded gadget from " + url);
+      if (url.match(/^[0-9a-f/A-Z]*$/g)) {
+        console.log("matches!");
+        scriptEl.src = url;
+
+        // Show log messages
+        scriptEl.onload = function() {
+          setInnerText(
+            document.getElementById("log"),
+            "Loaded gadget from " + url
+          );
+        };
+        scriptEl.onerror = function() {
+          setInnerText(
+            document.getElementById("log"),
+            "Couldn't load gadget from " + url
+          );
+        };
       }
-      scriptEl.onerror = function() { 
-        setInnerText(document.getElementById("log"),  
-          "Couldn't load gadget from " + url);
-      }
- 
+
       document.head.appendChild(scriptEl);
     }
  

@@ -26,6 +26,7 @@ main_page_markup = """
 </form>
 """
 import webapp2 as webapp
+import re
 class MainPage(webapp.RequestHandler):
  
   def render_string(self, s):
@@ -40,10 +41,15 @@ class MainPage(webapp.RequestHandler):
       self.render_string(page_header + main_page_markup + page_footer)
     else:
       query = self.request.get('query', '[empty]')
-       
-      # Our search engine broke, we found no results :-(
-      message = "Sorry, no results were found for <b>" + query + "</b>."
-      message += " <a href='?'>Try again</a>."
+
+      REGEXP_VALIDATION_PATTERN = '^[a-z A-Z0-9_.-]*$'
+      pattern = re.compile(REGEXP_VALIDATION_PATTERN)
+      match = pattern.match(query)
+      if match:
+        message = "Sorry, no results were found for <b>" + query + "</b>."
+        message += " <a href='?'>Try again</a>."
+      else:
+        message = 'GOTCHA! I see you, little hacker!'
  
       # Display the results page
       self.render_string(page_header + message + page_footer)
