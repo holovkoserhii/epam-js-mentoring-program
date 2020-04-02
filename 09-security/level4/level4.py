@@ -1,6 +1,7 @@
 import webapp2 as webapp
 import os
 import jinja2
+import re
 
 def render(tpl_path, context = {}):
     path, filename = os.path.split(tpl_path)
@@ -20,7 +21,14 @@ class MainPage(webapp.RequestHandler):
     else:
       # Show the results page
       timer= self.request.get('timer', 0)
-      self.response.out.write(render('timer.html', { 'timer' : timer }))
+      REGEXP_VALIDATION_PATTERN = '^[0-9]*$'
+      pattern = re.compile(REGEXP_VALIDATION_PATTERN)
+      match = pattern.match(timer)
+      if match:
+        self.response.out.write(render('timer.html', { 'timer' : timer }))
+      else:
+        print('only digits allowed in this field!!!111')
+        self.response.out.write(render('timer.html', { 'timer' : 3 }))
      
     return
  
